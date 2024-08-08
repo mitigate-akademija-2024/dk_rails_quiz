@@ -5,7 +5,7 @@ class QuizzesController < ApplicationController
   def index
     @quizzes = Quiz.all
 
-    @title = "These are the quizes"
+    @title = "The Grand Quiz Game"
     @description = "lorem 150"
   end
 
@@ -40,9 +40,11 @@ class QuizzesController < ApplicationController
 
     respond_to do |format|
       if @quiz.save
+        flash.notice = "Quiz was successfully created. Very cool."
         format.html { redirect_to quiz_url(@quiz), notice: "Quiz was successfully created." }
         format.json { render :show, status: :created, location: @quiz }
       else
+        flash.now.alert = "Something went wrong!"
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @quiz.errors, status: :unprocessable_entity }
       end

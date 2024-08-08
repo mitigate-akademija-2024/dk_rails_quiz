@@ -10,4 +10,9 @@ class QuestionController < ApplicationController
 
   def test
   end
+
+  def new
+    @quiz = Quiz.find(params:[:quiz_id])
+    @question = @quiz.questions.new
+  end
 end

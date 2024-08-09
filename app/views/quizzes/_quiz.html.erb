@@ -9,16 +9,16 @@
     <%= quiz.description %>
   </p>
 
-  <h3>Questions</h3>
-  <%= link_to 'Add question', new_quiz_question_path(@quiz), class: "mt-10 p-3 transition-all group inline-block rounded bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75" %>
-
-
+  <h3>Questions:</h3>
+  
 <div class="overflow-x-auto rounded-lg border border-gray-200">
   <table id="quizzes" class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
   <% quiz.questions.each do |question| %>
     <thead class="text-left">
       <tr>
         <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= question.question_text %></th>
+        <th><%= link_to "Edit", edit_question_path(question), class: "inline-block rounded border border-red-600 px-1 py-1 text-xs font-medium text-red-600 hover:bg-red-600 hover:text-white focus:outline-none focus:ring active:bg-red-500" %></th>
+        <th><%= button_to "Delete", question, method: :delete, class: "inline-block rounded border border-red-600 px-1 py-1 text-xs font-medium text-red-600 hover:bg-red-600 hover:text-white focus:outline-none focus:ring active:bg-red-500" %></th>
       </tr>
     </thead>
         <thead class="text-left">
@@ -34,4 +34,5 @@
     </tbody>
   </table>
 </div>
+<%= link_to 'Add question', new_quiz_question_path(@quiz), class: "mt-10 p-3 transition-all group inline-block rounded bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75" %>
 </div>

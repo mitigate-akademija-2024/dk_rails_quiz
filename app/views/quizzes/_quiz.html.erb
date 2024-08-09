@@ -24,7 +24,7 @@
         <thead class="text-left">
           <% question.answers.each do |answer| %>
             <tr>
-              <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= answer.answer_text %></th>
+              <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= answer.correct && "-->" %><%= answer.answer_text %></th>
             </tr>
           <% end %>
         </thead>

@@ -6,6 +6,11 @@ class QuestionsController < ApplicationController
 
   def create
     @question = @quiz.questions.new(question_params)
+
+    @question.answers.new answer_text: params[:question][:answer_text1]
+    @question.answers.new answer_text: params[:question][:answer_text2]
+    @question.answers.new answer_text: params[:question][:answer_text3]
+
     if @question.save
       flash.notice = "Question was successfully created."
       redirect_to quiz_url(@quiz)

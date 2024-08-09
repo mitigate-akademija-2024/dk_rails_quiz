@@ -11,9 +11,17 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="flex flex-col">
     <%= form.label :question_text %>
     <%= form.text_field :question_text %>
+    
+
+    <%= form.label :answer_text1 %>
+    <%= form.text_field :answer_text1 %>
+    <%= form.label :answer_text2 %>
+    <%= form.text_field :answer_text2 %>
+    <%= form.label :answer_text3 %>
+    <%= form.text_field :answer_text3 %>
   </div>
 
   <div class="mt-4">

@@ -1,7 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :set_quiz, only: [:new, :create]
   before_action :set_question, only: [:destroy, :edit, :update]
-
   def index
   end
 
@@ -33,7 +32,6 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy
-
     redirect_to quiz_path(@question.quiz), notice: "Question has been destroyed."
   end
 

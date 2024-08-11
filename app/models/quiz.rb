@@ -7,6 +7,8 @@ class Quiz < ApplicationRecord
 
   has_many :questions, dependent: :destroy
 
+  belongs_to :user
+  
   protected
 
   def normalize_title

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :quizzes
   root "quizzes#index"
   get "/start_quiz", to: "quizzes#start"

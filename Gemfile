@@ -29,6 +29,12 @@ gem "cssbundling-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# Flexible authentication solution for Rails with Warden
+gem 'devise', '~> 4.9', '>= 4.9.3'
+
+# Beautifier with erb support
+gem 'htmlbeautifier'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

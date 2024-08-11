@@ -1,0 +1,35 @@
+<header class="border-b border-gray-200 bg-gray-50">
+  <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Quizz Game</h1>
+        <p class="mt-1.5 text-sm text-gray-500">
+          Create your own quizzes and compete with your friends!
+        </p>
+      </div>
+      <div class="flex items-center gap-4">
+        <% if user_signed_in? %>
+          <span class="text-sm font-medium"><%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: 'inline-flex items-center justify-center gap-1.5 px-5 py-3 transition-all rounded border border-red-600 bg-red-600 text-sm font-medium hover:bg-transparent hover:text-red-600 focus:outline-none focus:ring active:text-red-500' %></span>
+          <button
+          class="inline-flex items-center justify-center gap-1.5 rounded border border-gray-200 bg-white px-5 py-3 text-gray-900 transition hover:text-gray-700 focus:outline-none focus:ring"
+          type="button">
+            <span class="text-sm font-medium"> <%= link_to "My Profile", edit_user_registration_path %> </span>
+          </button>
+          <%= current_user.email if user_signed_in? %>
+          <%= current_user.id if user_signed_in? %>
+        <% else %>
+          <button
+          class="inline-flex items-center justify-center gap-1.5 rounded border border-gray-200 bg-white px-5 py-3 text-gray-900 transition hover:text-gray-700 focus:outline-none focus:ring"
+          type="button">
+            <span class="text-sm font-medium"> <%= link_to "Sign In", new_user_session_path %> </span>
+          </button>
+          <button
+          class="inline-flex items-center justify-center gap-1.5 px-5 py-3 transition-all group inline-block rounded bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75"
+          type="button">
+            <span class="text-sm font-medium"><%= link_to "Sign Up", new_user_registration_path %></span>
+          </button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</header>

@@ -85,18 +85,17 @@ class QuizzesController < ApplicationController
     correct_answers = 0
     total_questions = @quiz.questions.count
   
-    params.each do |key, value|
-      if key.start_with?('question_')
-        question_id = key.split('_').last
+    params.each do |answer, value|
+      if answer.start_with?('question_')
+        question_id = answer.split('_').last
         question = Question.find(question_id)
         answer = Answer.find(value)
-        correct_answers += 1 if answer.correct # Assuming you have a 'correct' boolean field in your Answer model
+        correct_answers += 1 if answer.correct
       end
     end
   
     score = (correct_answers.to_f / total_questions * 100).round
   
-    # Save the score in UserScores table
     UserScore.create(user: current_user, quiz: @quiz, score: score)
   
     redirect_to result_quiz_path(@quiz, score: score)
@@ -107,6 +106,9 @@ class QuizzesController < ApplicationController
     @user_score = current_user.user_scores.find_by(quiz: @quiz)
   end
 
+  def my_quizzes
+    @quizzes = current_user.quizzes
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -15,6 +15,7 @@
           type="button">
             <span class="text-sm font-medium"> <%= link_to "My Profile", edit_user_registration_path %> </span>
           </button>
+            <span class="text-sm font-medium"><%= link_to 'My Quizzes', my_quizzes_quizzes_path %> </span>
           <%= current_user.email if user_signed_in? %>
           <%= current_user.id if user_signed_in? %>
         <% else %>
@@ -33,3 +34,5 @@
     </div>
   </div>
 </header>
+<div>
+</div>

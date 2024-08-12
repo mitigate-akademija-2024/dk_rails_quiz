@@ -1,17 +1,18 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :quizzes
   root "quizzes#index"
   get "/start_quiz", to: "quizzes#start"
 
 
+  
   resources :quizzes do
+    get "my_quizzes", on: :collection
     resources :questions, shallow: true
     get "continue", on: :member
     get "completed", on: :collection
-    get 'do_quiz', on: :member
-    post 'submit_quiz', on: :member
-    get 'result', on: :member
+    get "do_quiz", on: :member
+    post "submit_quiz", on: :member
+    get "result", on: :member
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

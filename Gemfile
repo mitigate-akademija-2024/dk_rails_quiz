@@ -35,6 +35,9 @@ gem 'devise', '~> 4.9', '>= 4.9.3'
 # Beautifier with erb support
 gem 'htmlbeautifier'
 
+# CanCanCan used for authorization
+gem 'cancancan'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

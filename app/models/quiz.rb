@@ -1,16 +1,14 @@
 class Quiz < ApplicationRecord
   validates :title, presence: true, uniqueness: true
-
+  
   before_validation :normalize_title
-
   before_save :normalize_description
 
   has_many :questions, dependent: :destroy
+  has_many :user_scores, dependent: :destroy
 
   belongs_to :user
-
-  has_many :user_scores
-  
+ 
   protected
 
   def normalize_title

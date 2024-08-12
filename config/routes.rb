@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get "completed", on: :collection
     get 'do_quiz', on: :member
     post 'submit_quiz', on: :member
+    get 'result', on: :member
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

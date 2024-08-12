@@ -1,0 +1,9 @@
+<h1>Quiz Result</h1>
+
+<p>Your score: <%= @score %>%</p>
+
+<% if @user_score %>
+  <p>This score has been saved to your profile.</p>
+<% end %>
+
+<%= link_to 'Back to Quizzes', quizzes_path %>

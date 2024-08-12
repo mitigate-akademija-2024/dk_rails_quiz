@@ -1,5 +1,5 @@
 class QuizzesController < ApplicationController
-  before_action :set_quiz, only: %i[ show edit update destroy ]
+  before_action :set_quiz, only: %i[ show edit update destroy result do_quiz submit_quiz]
 
   # GET /quizzes or /quizzes.json
   def index
@@ -77,13 +77,37 @@ class QuizzesController < ApplicationController
   end
 
   def do_quiz
-    @quiz = Quiz.find(params[:id])
     @questions = @quiz.questions.includes(:answers)
   end
+
+  #Šitas noteikti ka nepareizi
   def submit_quiz
-    # Vajadzēs pārbaudīt atbildes un score
-    @quiz = Quiz.find(params[:id])
+    correct_answers = 0
+    total_questions = @quiz.questions.count
+  
+    params.each do |key, value|
+      if key.start_with?('question_')
+        question_id = key.split('_').last
+        question = Question.find(question_id)
+        answer = Answer.find(value)
+        correct_answers += 1 if answer.correct # Assuming you have a 'correct' boolean field in your Answer model
+      end
+    end
+  
+    score = (correct_answers.to_f / total_questions * 100).round
+  
+    # Save the score in UserScores table
+    UserScore.create(user: current_user, quiz: @quiz, score: score)
+  
+    redirect_to result_quiz_path(@quiz, score: score)
   end
+
+  def result
+    @score = params[:score]
+    @user_score = current_user.user_scores.find_by(quiz: @quiz)
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz

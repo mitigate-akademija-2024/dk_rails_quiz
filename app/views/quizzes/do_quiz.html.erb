@@ -1,6 +1,6 @@
 <h1><%= @quiz.title %></h1>
 
-<%= form_with( method: :post, local: true) do |form| %>
+<%= form_with(url: submit_quiz_quiz_path(@quiz), method: :post, local: true) do |form| %>
   <% @questions.each_with_index do |question, index| %>
     <div class="question">
       <h3>Question <%= index + 1 %>: <%= question.question_text %></h3>

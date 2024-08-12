@@ -8,6 +8,8 @@ class Quiz < ApplicationRecord
   has_many :questions, dependent: :destroy
 
   belongs_to :user
+
+  has_many :user_scores
   
   protected
 

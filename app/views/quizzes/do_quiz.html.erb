@@ -1,0 +1,17 @@
+<h1><%= @quiz.title %></h1>
+
+<%= form_with( method: :post, local: true) do |form| %>
+  <% @questions.each_with_index do |question, index| %>
+    <div class="question">
+      <h3>Question <%= index + 1 %>: <%= question.question_text %></h3>
+      <% question.answers.each do |answer| %>
+        <div>
+          <%= form.radio_button "question_#{question.id}", answer.id %>
+          <%= form.label "question_#{question.id}_#{answer.id}", answer.answer_text %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <%= form.submit "Submit Quiz" %>
+  <%= link_to "Back to All Quizzes", quizzes_path %>
+<% end %>

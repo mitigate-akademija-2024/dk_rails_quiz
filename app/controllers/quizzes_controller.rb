@@ -76,6 +76,14 @@ class QuizzesController < ApplicationController
     end
   end
 
+  def do_quiz
+    @quiz = Quiz.find(params[:id])
+    @questions = @quiz.questions.includes(:answers)
+  end
+  def submit_quiz
+    # Vajadzēs pārbaudīt atbildes un score
+    @quiz = Quiz.find(params[:id])
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz

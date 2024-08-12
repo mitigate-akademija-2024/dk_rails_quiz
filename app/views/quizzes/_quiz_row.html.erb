@@ -3,6 +3,11 @@
   <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= quiz.title %></td>
   <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= quiz.description.truncate(30) %></td>
   <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= quiz.created_at.strftime('%Y %B %d') %></td>
-  <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= link_to("Open", quiz, class: 'p-3 transition-all group inline-block rounded bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75') %><%= link_to 'Take Quiz', do_quiz_quiz_path(quiz) %></td>
-  
+  <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+  <% if can? :edit, @quiz %>
+    <%= link_to("Open", quiz, class: 'p-3 transition-all group inline-block rounded bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75') %>
+  <% end %>
+  <% if user_signed_in? %>
+  <%= link_to 'Take Quiz', do_quiz_quiz_path(quiz), class: "btn-primary"%></td>
+  <% end %>
 </tr>

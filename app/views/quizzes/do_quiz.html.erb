@@ -12,6 +12,6 @@
       <% end %>
     </div>
   <% end %>
-  <%= form.submit "Submit Quiz" %>
+  <%= form.submit "Submit Quiz" if can? :submit_quiz, @quiz  %>
   <%= link_to "Back to All Quizzes", quizzes_path %>
 <% end %>

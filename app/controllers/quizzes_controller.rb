@@ -1,4 +1,5 @@
 class QuizzesController < ApplicationController
+  load_and_authorize_resource except: [:do_quiz, :result]
   before_action :set_quiz, only: %i[ show edit update destroy result do_quiz submit_quiz]
 
   # GET /quizzes or /quizzes.json
@@ -78,10 +79,12 @@ class QuizzesController < ApplicationController
 
   def do_quiz
     @questions = @quiz.questions.includes(:answers)
+    authorize! :do_quiz, @quiz
   end
 
   #Šitas noteikti ka nepareizi
   def submit_quiz
+    authorize! :submit_quiz, @quiz
     correct_answers = 0
     total_questions = @quiz.questions.count
   
@@ -96,14 +99,21 @@ class QuizzesController < ApplicationController
   
     score = (correct_answers.to_f / total_questions * 100).round
   
-    UserScore.create(user: current_user, quiz: @quiz, score: score)
+    user_score = UserScore.create(user: current_user, quiz: @quiz, score: score)
   
     redirect_to result_quiz_path(@quiz, score: score)
+  
   end
 
   def result
+    authorize! :result, @quiz
     @score = params[:score]
     @user_score = current_user.user_scores.find_by(quiz: @quiz)
+
+    if @score.nil?
+      flash[:alert] = "No score available. Please take the quiz first."
+      redirect_to quiz_path(@quiz) and return
+    end
   end
 
   def my_quizzes

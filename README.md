@@ -25,3 +25,8 @@ Things you may want to cover:
 yarn build --watch
 
 yarn build:css --watch
+
+admin@admin.com
+admin pass: adminadmin
+
+user pass: password

@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   get "/start_quiz", to: "quizzes#start"
 
 
-  
+  resources :user_scores, only: :show
+    
   resources :quizzes do
     get "my_quizzes", on: :collection
     resources :questions, shallow: true

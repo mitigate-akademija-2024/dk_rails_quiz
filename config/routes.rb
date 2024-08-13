@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
   resources :quizzes do
     get "my_quizzes", on: :collection
-    resources :questions, shallow: true
+    put "submit_feedback", on: :member
+    get "all_feedback", on: :collection
+  resources :questions, shallow: true
     get "continue", on: :member
     get "completed", on: :collection
     get "do_quiz", on: :member

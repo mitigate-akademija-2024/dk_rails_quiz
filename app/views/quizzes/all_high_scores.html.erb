@@ -3,7 +3,9 @@
 
 <% if @quizzes_with_scores.any? %>
   <% @quizzes_with_scores.each do |quiz| %>
-    <h2><%= quiz.title %></h2>
+    <h2><%= quiz.title %>
+    <%= link_to "Take This Quiz", do_quiz_quiz_path(quiz), class: "btn btn-primary" %>
+    </h2>
     <table>
       <thead>
         <tr>
@@ -28,3 +30,4 @@
 <% else %>
   <p>No quizzes have been completed yet.</p>
 <% end %>
+<h3><%= link_to "Export to CSV", all_feedback_quizzes_path(format: :csv), class: "btn btn-primary" %></h3>

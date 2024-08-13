@@ -1,0 +1,35 @@
+<h1>All Quiz Feedback</h1>
+
+<% @quizzes.each do |quiz| %>
+  <h2>
+    <%= quiz.title %>
+    <%= link_to "Take This Quiz", do_quiz_quiz_path(quiz), class: "btn btn-primary" %>
+  </h2>
+  
+  <% if quiz.user_scores.any?(&:user_feedback?) %>
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Feedback</th>
+          <th>Score</th>
+          <th>Submitted At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% quiz.user_scores.select(&:user_feedback?).each do |user_score| %>
+          <tr>
+            <td><%= user_score.user.email %></td>
+            <td><%= user_score.user_feedback %></td>
+            <td><%= user_score.score %></td>
+            <td><%= user_score.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No feedback yet.</p>
+  <% end %>
+
+  <hr>
+<% end %>

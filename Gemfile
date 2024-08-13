@@ -38,6 +38,10 @@ gem 'htmlbeautifier'
 # CanCanCan used for authorization
 gem 'cancancan'
 
+gem 'pry'
+
+gem 'acts_as_csv_exportable'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

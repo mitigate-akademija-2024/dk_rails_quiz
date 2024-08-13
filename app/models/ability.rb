@@ -21,6 +21,8 @@ class Ability
       can :update, Question, user: user
       can :edit, Question, user: user
       can :all_high_scores, Quiz
+      can :submit_feedback, Quiz
+      can :all_feedback, Quiz
     else # guest user
       can :read, :all
     end

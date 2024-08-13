@@ -37,7 +37,7 @@ class QuizzesController < ApplicationController
 
   # POST /quizzes or /quizzes.json
   def create
-    authorize! :create, @quiz
+    authorize! :create, @question
     @quiz = Quiz.new(quiz_params)
 
     respond_to do |format|
@@ -134,6 +134,26 @@ class QuizzesController < ApplicationController
     end
   end
 
+  def submit_feedback
+    @user_score = current_user.user_scores.find_by(quiz: @quiz)
+    if @user_score.update(user_feedback_params)
+      flash[:notice] = "Thank you for your feedback!"
+    else
+      flash[:alert] = "There was an issue submitting your feedback."
+    end
+    
+    redirect_to quiz_path(@quiz)
+  end
+
+  def all_feedback
+    @quizzes = Quiz.includes(user_scores: :user).order(:title)
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data Quiz.to_csv, filename: "all_quiz_feedback_#{Date.today}.csv" }
+    end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
@@ -143,5 +163,9 @@ class QuizzesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def quiz_params
       params.require(:quiz).permit(:title, :description, :user_id)
+    end
+
+    def user_feedback_params
+      params.require(:user_score).permit(:user_feedback)
     end
 end

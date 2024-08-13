@@ -2,7 +2,6 @@
 
 class Ability
   include CanCan::Ability
-
   def initialize(user)
     user ||= User.new # guest user (not logged in)
 
@@ -11,11 +10,17 @@ class Ability
     elsif user.persisted? # logged in user
       can :read, :all
       can :create, Quiz
-      can [:update, :destroy], Quiz, user_id: user.id
+      can [:update, :destroy], Quiz, user: user
       can :my_quizzes, Quiz
       can :do_quiz, Quiz  # All logged-in users can take any quiz
       can :submit_quiz, Quiz # All logged-in users can take any quiz
       can :result, Quiz
+      can :create, Question
+      can :add_answer, Question
+      can :new, Question
+      can :update, Question, user: user
+      can :edit, Question, user: user
+      can :all_high_scores, Quiz
     else # guest user
       can :read, :all
     end

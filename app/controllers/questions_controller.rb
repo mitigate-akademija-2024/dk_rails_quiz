@@ -1,10 +1,12 @@
 class QuestionsController < ApplicationController
+  load_and_authorize_resource except: [:create, :add_answer, :update, :edit]
   before_action :set_quiz, only: [:new, :create]
   before_action :set_question, only: [:destroy, :edit, :update]
   def index
   end
 
   def create
+    authorize! :update, @quiz
     @question = @quiz.questions.new(question_params)
     if params[:commit] == "add_answer"
       @question.answers.new
@@ -20,11 +22,13 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    authorize! :new, @question
     @question = @quiz.questions.new
     @question.answers.new
   end
 
   def add_answer
+    authorize! :add_answer, @question
     @question = @quiz.questions.new(question_params)
     @question.answers.news
     render :new
@@ -36,9 +40,11 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    authorize! :edit, @question
   end
 
   def update
+    authorize! :update, @question
     if @question.update(question_params)
       redirect_to quiz_url(@question.quiz), notice: "Question was successfully updated."
     else

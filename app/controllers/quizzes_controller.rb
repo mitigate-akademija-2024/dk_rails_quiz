@@ -37,6 +37,7 @@ class QuizzesController < ApplicationController
 
   # POST /quizzes or /quizzes.json
   def create
+    authorize! :create, @quiz
     @quiz = Quiz.new(quiz_params)
 
     respond_to do |format|
@@ -56,6 +57,7 @@ class QuizzesController < ApplicationController
 
   # PATCH/PUT /quizzes/1 or /quizzes/1.json
   def update
+    authorize! :create, @quiz
     respond_to do |format|
       if @quiz.update(quiz_params)
         format.html { redirect_to quiz_url(@quiz), notice: "Quiz was successfully updated." }
@@ -118,6 +120,18 @@ class QuizzesController < ApplicationController
 
   def my_quizzes
     @quizzes = current_user.quizzes
+  end
+  
+  def all_high_scores
+    authorize! :read, Quiz
+    @quizzes_with_scores = Quiz.joins(:user_scores)
+                               .distinct
+                               .order(:title)
+    
+    @top_scores = {}
+    @quizzes_with_scores.each do |quiz|
+      @top_scores[quiz.id] = UserScore.top_scores_for_quiz(quiz)
+    end
   end
 
   private

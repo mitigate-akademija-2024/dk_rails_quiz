@@ -2,10 +2,8 @@ Rails.application.routes.draw do
   devise_for :users
   root "quizzes#index"
   get "/start_quiz", to: "quizzes#start"
+  resources :high_scores, only: [:index, :show]
 
-
-  resources :user_scores, only: :show
-    
   resources :quizzes do
     get "my_quizzes", on: :collection
     resources :questions, shallow: true
@@ -14,6 +12,8 @@ Rails.application.routes.draw do
     get "do_quiz", on: :member
     post "submit_quiz", on: :member
     get "result", on: :member
+    get 'all_high_scores', on: :collection
+
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

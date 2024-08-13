@@ -1,0 +1,30 @@
+<!-- app/views/quizzes/all_high_scores.html.erb -->
+<h1>All Quizzes High Scores</h1>
+
+<% if @quizzes_with_scores.any? %>
+  <% @quizzes_with_scores.each do |quiz| %>
+    <h2><%= quiz.title %></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>User</th>
+          <th>Score</th>
+          <th>Completed At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @top_scores[quiz.id].each_with_index do |user_score, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= user_score.user.email %></td>
+            <td><%= user_score.score %></td>
+            <td><%= user_score.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% else %>
+  <p>No quizzes have been completed yet.</p>
+<% end %>

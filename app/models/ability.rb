@@ -25,6 +25,8 @@ class Ability
       can :all_feedback, Quiz
     else # guest user
       can :read, :all
+      can :do_quiz, Quiz
+      
     end
     # Define abilities for the user here. For example:
     #

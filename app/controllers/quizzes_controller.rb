@@ -87,28 +87,34 @@ class QuizzesController < ApplicationController
   def submit_quiz
     authorize! :submit_quiz, @quiz
     total_score = 0
+    correct_count = 0
+    @questions = @quiz.questions.includes(:answers)
     
-    params.each do |key, value|
-      if key.start_with?('question_')
-        question_id = key.split('_').last
-        question = Question.find(question_id)
-        answer = Answer.find(value)
-        if answer.correct
-          total_score += (question.point_value * 10)
-        end
+    @questions.each do |question|
+      selected_answer_id = params["question_#{question.id}"]
+      if selected_answer_id && question.answers.find(selected_answer_id).correct
+        total_score += question.point_value
+        correct_count += 1
       end
     end
-  
-    user_score = UserScore.create(user: current_user, quiz: @quiz, score: total_score)
-  
-    redirect_to result_quiz_path(@quiz, score: total_score)
+
+    user_score = UserScore.create(
+      user: current_user,
+      quiz: @quiz,
+      score: total_score
+    )
+
+    redirect_to result_quiz_path(@quiz, score: total_score, correct_count: correct_count, total_questions: @questions.count)
   end
 
   def result
     authorize! :result, @quiz
     @score = params[:score]
+    @correct_count = params[:correct_count].to_i
+    @total_questions = params[:total_questions].to_i
+    @correct_percentage = (@total_questions > 0) ? (@correct_count.to_f / @total_questions * 100).round(2) : 0
     @user_score = current_user.user_scores.find_by(quiz: @quiz)
-  
+
     if @score.nil?
       flash[:alert] = "No score available. Please take the quiz first."
       redirect_to quiz_path(@quiz) and return
@@ -135,11 +141,11 @@ class QuizzesController < ApplicationController
     @user_score = current_user.user_scores.find_by(quiz: @quiz)
     if @user_score.update(user_feedback_params)
       flash[:notice] = "Thank you for your feedback!"
+      redirect_to all_feedback_quizzes_path
     else
-      flash[:alert] = "There was an issue submitting your feedback."
+      flash[:alert] = @user_score.errors.full_messages.join(", ")
+      redirect_to result_quiz_path(@quiz, score: @user_score.score, correct_count: params[:correct_count], total_questions: params[:total_questions])
     end
-    
-    redirect_to quiz_path(@quiz)
   end
 
   def all_feedback

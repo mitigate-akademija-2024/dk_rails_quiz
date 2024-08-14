@@ -1,9 +1,6 @@
-<h1 class = "text-center text-lg font-bold"><%= @quiz.title %></h1>
+<h1 class = "text-center text-xl font-bold pt-6"><%= @quiz.title %></h1>
 <h2 class = "font-bold mb-5">Add new question</h2>
 
 <%= render "form", question: @question %>
 
 
-<div class="mt-6">
-  <%= link_to "Back", @quiz, class: "btn-lg" %>
-</div>

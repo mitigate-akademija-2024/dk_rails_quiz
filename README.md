@@ -30,3 +30,6 @@ admin@admin.com
 admin pass: adminadmin
 
 user pass: password
+
+
+edit view for quiz - styling

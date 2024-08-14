@@ -11,19 +11,19 @@
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" class="px-6 py-3">User</th>
-            <th scope="col" class="px-6 py-3">Feedback</th>
-            <th scope="col" class="px-6 py-3">Score</th>
-            <th scope="col" class="px-6 py-3">Submitted At</th>
+            <th scope="col" class="px-4 py-3 w-1/4">User</th>
+            <th scope="col" class="px-4 py-3 w-1/2">Feedback</th>
+            <th scope="col" class="px-4 py-3 w-1/8">Score</th>
+            <th scope="col" class="px-4 py-3 w-1/8">Submitted At</th>
           </tr>
         </thead>
         <tbody>
           <% quiz.user_scores.select(&:user_feedback?).each do |user_score| %>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"><%= user_score.user.email %></td>
-              <td class="px-6 py-4"><%= user_score.user_feedback %></td>
-              <td class="px-6 py-4"><%= user_score.score %></td>
-              <td class="px-6 py-4"><%= user_score.created_at.strftime("%d/%m/%Y") %></td>
+              <td class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"><%= user_score.user.email %></td>
+              <td class="px-4 py-4"><%= user_score.user_feedback %></td>
+              <td class="px-4 py-4 text-center"><%= user_score.score %></td>
+              <td class="px-4 py-4 text-center"><%= user_score.created_at.strftime("%d/%m/%Y") %></td>
             </tr>
           <% end %>
         </tbody>

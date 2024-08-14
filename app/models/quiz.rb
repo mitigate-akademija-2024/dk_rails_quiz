@@ -31,7 +31,11 @@ class Quiz < ApplicationRecord
       end
     end
   end
- 
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["title", "description"] # List all attributes that you want to allow for searching
+  end
+  
   protected
 
   def normalize_title

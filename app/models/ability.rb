@@ -18,11 +18,13 @@ class Ability
       can :create, Question
       can :add_answer, Question
       can :new, Question
-      can :update, Question, user: user
-      can :edit, Question, user: user
+      can :update, Question
+      can :edit, Question
+      can :destroy, Question
       can :all_high_scores, Quiz
       can :submit_feedback, Quiz
       can :all_feedback, Quiz
+      can :index, Quiz
     else # guest user
       can :read, :all
       can :do_quiz, Quiz

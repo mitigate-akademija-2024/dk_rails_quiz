@@ -37,7 +37,7 @@ class QuizzesController < ApplicationController
 
   # POST /quizzes or /quizzes.json
   def create
-    authorize! :create, @question
+    authorize! :create, @quiz
     @quiz = Quiz.new(quiz_params)
 
     respond_to do |format|
@@ -150,10 +150,15 @@ class QuizzesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.csv { send_data Quiz.to_csv, filename: "all_quiz_feedback_#{Date.today}.csv" }
+      format.csv { send_data Quiz.to_csv, filename: "all_quiz_highscores_#{Date.today}.csv" }
     end
   end
-  
+
+  def index
+    @q = Quiz.ransack(params[:q])
+    @quizzes = @q.result
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz

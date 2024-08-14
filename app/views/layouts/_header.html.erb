@@ -1,11 +1,13 @@
 <header class='flex border-b py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50'>
-  <div class='flex flex-wrap items-center gap-5 w-full'>
+  <div class='flex md:flex-wrap items-center gap-5 w-full'>
+<%= link_to quizzes_path do %>
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" version="1.1" id="Capa_1" width="60px" height="60px" viewBox="0 0 973.1 973.1" xml:space="preserve">
       <g>
         <path d="M502.29,788.199h-47c-33.1,0-60,26.9-60,60v64.9c0,33.1,26.9,60,60,60h47c33.101,0,60-26.9,60-60v-64.9   C562.29,815,535.391,788.199,502.29,788.199z"/>
         <path d="M170.89,285.8l86.7,10.8c27.5,3.4,53.6-12.4,63.5-38.3c12.5-32.7,29.9-58.5,52.2-77.3c31.601-26.6,70.9-40,117.9-40   c48.7,0,87.5,12.8,116.3,38.3c28.8,25.6,43.1,56.2,43.1,92.1c0,25.8-8.1,49.4-24.3,70.8c-10.5,13.6-42.8,42.2-96.7,85.9   c-54,43.7-89.899,83.099-107.899,118.099c-18.4,35.801-24.8,75.5-26.4,115.301c-1.399,34.1,25.8,62.5,60,62.5h49   c31.2,0,57-23.9,59.8-54.9c2-22.299,5.7-39.199,11.301-50.699c9.399-19.701,33.699-45.701,72.699-78.1   C723.59,477.8,772.79,428.4,795.891,392c23-36.3,34.6-74.8,34.6-115.5c0-73.5-31.3-138-94-193.4c-62.6-55.4-147-83.1-253-83.1   c-100.8,0-182.1,27.3-244.1,82c-52.8,46.6-84.9,101.8-96.2,165.5C139.69,266.1,152.39,283.5,170.89,285.8z"/>
       </g>
     </svg>
+    <% end %>
     <div id="collapseMenu"
       class='max-lg:hidden lg:!block max-lg:w-full max-lg:fixed max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-50 max-lg:before:inset-0 max-lg:before:z-50'>
       <button id="toggleClose" class='lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white p-3'>
@@ -31,32 +33,36 @@
           <li class='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
             class='lg:hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]'><%= link_to 'My Quizzes', my_quizzes_quizzes_path %></a>
           </li>
+          <div class = "lg:hidden">
+            <li class='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
+            class='lg:hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]'><%= button_to "Sign Out", destroy_user_session_path, method: :delete %></a>
+            </li>
+            <li class='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
+            class='lg:hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]'><%= link_to "My Profile", edit_user_registration_path %></a>
+            </li>
+          </div>
         <% end %>
       </ul>
     </div>
-    <button id="toggleOpen" class='lg:hidden ml-auto'>
-      <svg class="w-7 h-7" fill="#000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd"
+    <% if user_signed_in? %>
+      <button id="toggleOpen" class='lg:hidden ml-auto'>
+        <svg class="w-7 h-7" fill="#000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
           d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
           clip-rule="evenodd"></path>
-      </svg>
-    </button>
-    <div class='flex lg:ml-auto max-lg:w-full'>
+        </svg>
+      </button>
+    <% end %>
+    <div class="flex items-center lg:ml-auto">
       <% if user_signed_in? %>
-        <div
-        class='flex xl:w-80 max-xl:w-full bg-gray-100 px-6 py-3 rounded outline-transparent'>
-        <input type="text" placeholder="Search here" class="input input-bordered w-full max-w-xs rounded outline-none" />
+        <div class = "hidden lg:flex ">
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn-lg-2 mr-3"%>
+          <button class="btn-lg" type="button"><%= link_to "My Profile", edit_user_registration_path %>
+          </button>
         </div>
-      <% end %>
-    </div>
-    <div class="flex items-center gap-4">
-      <% if user_signed_in? %>
-        <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn-lg-2"%>
-        <button class="btn-lg" type="button"><%= link_to "My Profile", edit_user_registration_path %>
-        </button>
       <% else %>
         <button
-        class="btn-lg-2"
+        class="btn-lg-2 mr-4"
         type="button">
           <%= link_to "Log In", new_user_session_path %>
         </button>

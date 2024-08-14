@@ -1,33 +1,39 @@
-<!-- app/views/quizzes/all_high_scores.html.erb -->
-<h1>All Quizzes High Scores</h1>
+<h2 class="text-2xl font-bold mb-6 text-center">All Quizzes High Scores</h2>
 
 <% if @quizzes_with_scores.any? %>
   <% @quizzes_with_scores.each do |quiz| %>
-    <h2><%= quiz.title %>
-    <%= link_to "Take This Quiz", do_quiz_quiz_path(quiz), class: "btn btn-primary" %>
+    <h2 class="text-xl font-semibold mb-4 flex items-center justify-between">
+      <span><%= quiz.title %></span>
+      <%= link_to "Take This Quiz", do_quiz_quiz_path(quiz), class: "btn-sm" %>
     </h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>User</th>
-          <th>Score</th>
-          <th>Completed At</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @top_scores[quiz.id].each_with_index do |user_score, index| %>
+    
+    <div class="relative overflow-x-auto mb-6">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <td><%= index + 1 %></td>
-            <td><%= user_score.user.email %></td>
-            <td><%= user_score.score %></td>
-            <td><%= user_score.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+            <th scope="col" class="px-6 py-3">Rank</th>
+            <th scope="col" class="px-6 py-3">User</th>
+            <th scope="col" class="px-6 py-3">Score</th>
+            <th scope="col" class="px-6 py-3">Completed At</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @top_scores[quiz.id].each_with_index do |user_score, index| %>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"><%= index + 1 %></td>
+              <td class="px-6 py-4"><%= user_score.user.email %></td>
+              <td class="px-6 py-4"><%= user_score.score %></td>
+              <td class="px-6 py-4"><%= user_score.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   <% end %>
 <% else %>
-  <p>No quizzes have been completed yet.</p>
+  <p class="text-gray-600 dark:text-gray-400">No quizzes have been completed yet.</p>
 <% end %>
-<h3><%= link_to "Export to CSV", all_feedback_quizzes_path(format: :csv), class: "btn btn-primary" %></h3>
+
+<h3 class="mt-8 text-end">
+  <%= link_to "Export to CSV", all_feedback_quizzes_path(format: :csv), class: "btn-md" %>
+</h3>

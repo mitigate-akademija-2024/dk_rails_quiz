@@ -4,27 +4,37 @@
       <%= render "answer_form", form: ff %>
     <% end %>
   </template>
+
   <% if question.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
-      <ul>
+    <div class="mb-4 p-4 bg-red-100 text-red-800 border border-red-300 rounded">
+      <h2 class="text-lg font-semibold">
+        <%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:
+      </h2>
+      <ul class="list-disc pl-5 mt-2">
         <% question.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
-  <div class="flex flex-col">
-    <%= form.label :question_text %>
-    <%= form.text_field :question_text %>
-    <h3>Answers</h3>
-    <%= form.fields_for :answers do |ff| %>
-      <%=render 'answer_form', form: ff %>
-    <% end %>
-    <div data-nested-form-target="target"></div>
-    <button type="button" data-action="nested-form#add" class='inline-block rounded border border-red-600 px-1 py-1 text-xs font-medium text-red-600 hover:bg-red-600 hover:text-white focus:outline-none focus:ring active:bg-red-500'>Add answer</button>
+
+  <div class="flex flex-col space-y-4">
+    <div>
+      <%= form.label :question_text, class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :question_text, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" %>
+    </div>
+    
+    <div>
+      <h3 class="text-lg font-semibold text-gray-900">Answers</h3>
+      <%= form.fields_for :answers do |ff| %>
+        <%= render 'answer_form', form: ff %>
+      <% end %>
+      <div data-nested-form-target="target"></div>
+      <button type="button" data-action="nested-form#add" class='btn-lg'>Add answer</button>
+    </div>
   </div>
+
   <div class="mt-4">
-    <%= form.submit %>
+    <%= form.submit 'Save Question', class: "btn-lg-2" %>
   </div>
 <% end %>

@@ -35,6 +35,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @question
     @question.destroy
     redirect_to quiz_path(@question.quiz), notice: "Question has been destroyed."
   end

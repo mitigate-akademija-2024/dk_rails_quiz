@@ -25,6 +25,7 @@ class Ability
       can :submit_feedback, Quiz
       can :all_feedback, Quiz
       can :index, Quiz
+      can :send_invitation, Quiz
     else # guest user
       can :read, :all
       can :do_quiz, Quiz

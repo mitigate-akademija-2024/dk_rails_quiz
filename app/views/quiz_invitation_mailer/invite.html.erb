@@ -1,0 +1,7 @@
+<h1>You've been invited to take a quiz!</h1>
+
+<p><%= @sender.email %> has invited you to take the quiz: <%= @quiz.title %></p>
+
+<p>To take the quiz, please sign up using the link below:</p>
+
+<%= link_to 'Sign up and take the quiz', @url %>

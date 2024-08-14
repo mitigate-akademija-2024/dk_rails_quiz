@@ -158,7 +158,19 @@ class QuizzesController < ApplicationController
     @q = Quiz.ransack(params[:q])
     @quizzes = @q.result
   end
+  
+  def send_invitation 
+    authorize! :send_invitation, Quiz
+    @quiz = Quiz.find(params[:id])
+    email = params[:email]
 
+    if email.present?
+      QuizInvitationMailer.invite(email, @quiz, current_user).deliver_now
+      redirect_to @quiz, notice: 'Invitation sent successfully!'
+    else
+      redirect_to do_quiz_quiz_path(@quiz), alert: 'Please provide an email address.'
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz

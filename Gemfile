@@ -42,6 +42,8 @@ gem 'pry'
 
 gem 'ransack'
 
+gem 'letter_opener_web'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   devise_for :users
   root "quizzes#index"
   get "/start_quiz", to: "quizzes#start"
@@ -7,6 +8,7 @@ Rails.application.routes.draw do
   resources :quizzes do
     get "my_quizzes", on: :collection
     put "submit_feedback", on: :member
+    post "send_invitation", on: :member
     get "all_feedback", on: :collection
   resources :questions, shallow: true
     get "continue", on: :member

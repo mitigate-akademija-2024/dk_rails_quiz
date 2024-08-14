@@ -1,12 +1,15 @@
 <h1 class="text-3xl font-bold text-gray-900 my-6">
   <%= @quiz.title %>
 </h1>
-
+<%= form_tag(send_invitation_quiz_path(@quiz), method: :post) do %>
+  <%= email_field_tag :email, nil, placeholder: 'Enter email address', required: true %>
+  <%= submit_tag 'Send Invitation' %>
+<% end %>
 <%= form_with(url: submit_quiz_quiz_path(@quiz), method: :post, local: true) do |form| %>
   <% @questions.each_with_index do |question, index| %>
-    <div class="mb-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
+    <div class="my-6 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
       <h3 class="text-xl font-semibold text-gray-800 mb-4">
-        Question <%= index + 1 %>: <%= question.question_text %>
+        <%= index + 1 %>: <%= question.question_text %>
       </h3>
       <% question.answers.each do |answer| %>
         <div class="flex items-center mb-2">

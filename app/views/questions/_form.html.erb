@@ -25,6 +25,12 @@
     </div>
     
     <div>
+      <%= form.label :point_value, "Point Value", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.number_field :point_value, value: form.object.point_value || 1, min: 1, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" %>
+      <p class="mt-2 text-sm text-gray-500">Assign a point value to this question. Default is 1.</p>
+    </div>
+
+    <div>
       <h3 class="text-lg font-semibold text-gray-900">Answers</h3>
       <%= form.fields_for :answers do |ff| %>
         <%= render 'answer_form', form: ff %>

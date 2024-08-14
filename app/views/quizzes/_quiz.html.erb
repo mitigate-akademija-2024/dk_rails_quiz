@@ -33,7 +33,7 @@
           <% question.answers.each do |answer| %>
             <tr>
               <td class="whitespace-nowrap px-6 py-2 font-medium text-gray-900">
-                <%= answer.correct ? '--> ' : '' %><%= answer.answer_text %>
+                <%= '✅' if current_user&.admin? && answer.correct %><%= answer.answer_text %>
               </td>
             </tr>
           <% end %>

@@ -84,34 +84,31 @@ class QuizzesController < ApplicationController
     authorize! :do_quiz, @quiz
   end
 
-  #Šitas noteikti ka nepareizi
   def submit_quiz
     authorize! :submit_quiz, @quiz
-    correct_answers = 0
-    total_questions = @quiz.questions.count
-  
-    params.each do |answer, value|
-      if answer.start_with?('question_')
-        question_id = answer.split('_').last
+    total_score = 0
+    
+    params.each do |key, value|
+      if key.start_with?('question_')
+        question_id = key.split('_').last
         question = Question.find(question_id)
         answer = Answer.find(value)
-        correct_answers += 1 if answer.correct
+        if answer.correct
+          total_score += (question.point_value * 10)
+        end
       end
     end
   
-    score = (correct_answers.to_f / total_questions * 100).round
+    user_score = UserScore.create(user: current_user, quiz: @quiz, score: total_score)
   
-    user_score = UserScore.create(user: current_user, quiz: @quiz, score: score)
-  
-    redirect_to result_quiz_path(@quiz, score: score)
-  
+    redirect_to result_quiz_path(@quiz, score: total_score)
   end
 
   def result
     authorize! :result, @quiz
     @score = params[:score]
     @user_score = current_user.user_scores.find_by(quiz: @quiz)
-
+  
     if @score.nil?
       flash[:alert] = "No score available. Please take the quiz first."
       redirect_to quiz_path(@quiz) and return
@@ -159,7 +156,7 @@ class QuizzesController < ApplicationController
     @quizzes = @q.result
   end
   
-  def send_invitation 
+  def send_invitation
     authorize! :send_invitation, Quiz
     @quiz = Quiz.find(params[:id])
     email = params[:email]

@@ -1,9 +1,14 @@
-<h1 class="text-3xl font-bold text-gray-900 my-6">
+<h1 class="text-3xl font-bold text-gray-900 my-6 text-center">
   <%= @quiz.title %>
 </h1>
-<%= form_tag(send_invitation_quiz_path(@quiz), method: :post) do %>
-  <%= email_field_tag :email, nil, placeholder: 'Enter email address', required: true %>
-  <%= submit_tag 'Send Invitation' %>
+<%= form_tag(send_invitation_quiz_path(@quiz), method: :post, class: "flex flex-col items-end") do %>
+  <div>
+    <%= email_field_tag :email, nil, placeholder: 'Enter email address', required: true, 
+    class: "px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+  </div>
+  <div class="mt-0">
+    <%= submit_tag 'Send Invitation', class: "btn-sm mt-2" %>
+  </div>
 <% end %>
 <%= form_with(url: submit_quiz_quiz_path(@quiz), method: :post, local: true) do |form| %>
   <% @questions.each_with_index do |question, index| %>
@@ -13,6 +18,7 @@
       </h3>
       <% question.answers.each do |answer| %>
         <div class="flex items-center mb-2">
+        <%= '✅' if current_user&.admin? && answer.correct %>
           <%= form.radio_button "question_#{question.id}", answer.id, id: "question_#{question.id}_#{answer.id}", class: "h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300" %>
           <%= form.label "question_#{question.id}_#{answer.id}", answer.answer_text, class: "ml-2 text-gray-700" %>
         </div>

@@ -64,8 +64,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:question_text, answers_attributes: [:id, :answer_text, :correct, :_destroy])
+    params.require(:question).permit(:question_text, :point_value, answers_attributes: [:id, :answer_text, :correct, :_destroy])
   end
-
-
 end

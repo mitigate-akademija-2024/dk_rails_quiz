@@ -1,5 +1,5 @@
 <h1 class="text-2xl font-bold text-gray-900 mb-6">
-  Your Score: <%= @score %>%
+  Your Score: <%= @score %>
 </h1>
 <%= form_with model: @user_score, url: submit_feedback_quiz_path(@quiz), method: :put, local: true do |form| %>
   <div class="mb-6">

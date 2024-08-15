@@ -138,8 +138,10 @@ class QuizzesController < ApplicationController
   end
 
   def submit_feedback
-    @user_score = current_user.user_scores.find_by(quiz: @quiz)
-    if @user_score.update(user_feedback_params)
+    @user_score = current_user.user_scores.where(quiz: @quiz).last
+    @user_score.assign_attributes(user_feedback_params)
+
+    if @user_score.save(context: :feedback_submission)
       flash[:notice] = "Thank you for your feedback!"
       redirect_to all_feedback_quizzes_path
     else

@@ -9,7 +9,8 @@ class UserScore < ApplicationRecord
       maximum: 100, 
       too_short: "Feedback must be at least %{count} characters long",
       too_long: "Feedback too long (maximum is %{count} characters)"
-    }
+    },
+    on: :feedback_submission
 
   def self.top_scores_for_quiz(quiz, limit = 5)
     where(quiz: quiz)
